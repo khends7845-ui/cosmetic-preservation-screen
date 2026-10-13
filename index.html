@@ -24,7 +24,7 @@
   </style>
 </head>
 <body>
-<header><div class="wrap hero"><div><h1>表面活性剂 × 防腐体系筛选器</h1><p>从法规、产品类型、pH、胶束/相分配、电荷作用与增效剂出发，筛选优先候选和风险排除项，并展示每条判断背后的证据。</p></div><div class="badge">持续迭代数据库 · 12条首批规则</div></div></header>
+<header><div class="wrap hero"><div><h1>表面活性剂 × 防腐体系筛选器</h1><p>从法规、产品类型、pH、胶束/相分配、电荷作用与增效剂出发，筛选优先候选和风险排除项，并展示每条判断背后的证据。</p></div><div class="badge">持续迭代数据库 · 20种表活 · 12条首批规则</div></div></header>
 <main><div class="wrap">
   <div class="notice"><b>使用边界：</b>本工具用于研发早期筛选和实验优先级排序，不替代配方师判断、法规复核或 ISO 11930 成品挑战试验。灰色结果表示证据不足，不表示安全或不安全。</div>
   <div class="tabs"><button class="tab active" data-mode="ingredient">单个防腐剂找具体表活</button><button class="tab" data-mode="preservative">按防腐体系找规则</button><button class="tab" data-mode="property">按表活属性筛选</button><button class="tab" data-mode="network">机制网络</button><button class="tab" data-mode="data">数据维护</button></div>
@@ -87,10 +87,31 @@ const rules=[
 {id:'M08',surf:'泊洛沙姆184',types:['非离子'],products:['水剂/增溶型'],pres:['苯氧乙醇','苯甲酸钠/山梨酸钾'],effect:'有机制依据，缺直接配对证据',status:'gray',level:'D',mechanism:'聚合物胶束可能包载疏水防腐剂',conclusion:'物理化学机制合理，但缺少化妆品防腐配对的直接证据。',condition:'胶束形成受浓度与温度影响',action:'测CMC附近浓度梯度与游离防腐剂',source:'Halla et al., 2018；待补直接研究',peg:true},
 {id:'M09',surf:'各类表活体系',types:['阴离子','两性','非离子','乳化型'],products:['清洁型','乳化型','水剂/增溶型'],pres:['苯氧乙醇+乙基己基甘油'],effect:'优先候选',status:'green',level:'A',mechanism:'EHG损伤细胞膜完整性，提高苯氧乙醇致死速度',conclusion:'对E. coli有直接协同证据，但真菌端不能自动外推。',condition:'需注意实际表活可能改变两者的游离浓度',action:'仍须进行成品全菌谱PET',source:'Langsrud et al., 2016 · DOI 10.1371/journal.pone.0165228',peg:false},
 {id:'M10',surf:'各类表活体系',types:['阴离子','两性','非离子','乳化型'],products:['清洁型','乳化型','水剂/增溶型'],pres:['1,2-己二醇复配体系'],effect:'候选',status:'yellow',level:'B',mechanism:'二醇自身抑菌，并可与其他抗菌成分协同',conclusion:'不能将“防腐增效剂”自动当作完整广谱防腐体系。',condition:'尤其需要补充酵母和霉菌端证据',action:'完成全菌谱PET并记录复配主防腐剂',source:'Hwang et al., 2015 · PMID 25631558',peg:false}
+,{id:'M11',surf:'高油相/乳化型体系',types:['乳化型'],products:['乳化型'],pres:['苯氧乙醇'],effect:'重点核验',status:'orange',level:'A',mechanism:'防腐剂向油相或界面分配，可能降低水相有效浓度',conclusion:'总添加量合规不等于水相游离苯氧乙醇浓度充足，高油相产品应单独评估。',condition:'乳液、面霜、防晒及底妆等多相体系',action:'测定相分配或水相游离浓度，并完成PET',source:'Puschmann et al., 2018 · DOI 10.1016/j.ejpb.2018.08.007',peg:false},
+{id:'M12',surf:'低pH表活体系',types:['阴离子','两性','非离子','乳化型'],products:['清洁型','乳化型','水剂/增溶型'],pres:['苯甲酸钠/山梨酸钾'],effect:'pH合适时优先',status:'green',level:'B/C',mechanism:'降低pH可提高未解离有机酸比例，从而增强其进入微生物细胞的能力',conclusion:'pH是有机酸防腐体系的首要筛选变量，但仍需结合缓冲容量、菌种和表活胶束作用判断。',condition:'以成品实测pH为准；不同有机酸需按各自pKa判断',action:'记录成品pH与缓冲容量，并按实际配方完成PET',source:'Halla et al., 2018；Tang & Du, 2024',peg:false,phMax:5.5}
 ];
 const labels={green:'优先候选',yellow:'条件适用',orange:'高风险/排除',gray:'证据不足'};
 const ingredients=[
-{name:'月桂醇聚醚硫酸酯钠（SLES）',type:'阴离子',product:'清洁型',peg:true},{name:'椰油酰胺丙基甜菜碱（CAPB）',type:'两性',product:'清洁型',peg:false},{name:'椰油酰肌氨酸钠',type:'阴离子',product:'清洁型',peg:false},{name:'甲基椰油酰基牛磺酸钠',type:'阴离子',product:'清洁型',peg:false},{name:'椰油酰甘氨酸钠',type:'阴离子',product:'清洁型',peg:false},{name:'椰油酰两性基二乙酸二钠',type:'两性',product:'清洁型',peg:false},{name:'椰油酰羟乙磺酸酯钠（SCI）',type:'阴离子',product:'清洁型',peg:false},{name:'泊洛沙姆184',type:'非离子',product:'水剂/增溶型',peg:true},{name:'PEG-40氢化蓖麻油',type:'非离子',product:'水剂/增溶型',peg:true},{name:'聚山梨醇酯-20',type:'非离子',product:'水剂/增溶型',peg:true},{name:'PEG-100硬脂酸酯',type:'乳化型',product:'乳化型',peg:true},{name:'甘油硬脂酸酯',type:'乳化型',product:'乳化型',peg:false}
+{name:'月桂醇聚醚硫酸酯钠（SLES）',type:'阴离子',product:'清洁型',peg:true},
+{name:'椰油酰胺丙基甜菜碱（CAPB）',type:'两性',product:'清洁型',peg:false},
+{name:'椰油基甜菜碱（Coco-Betaine）',type:'两性',product:'清洁型',peg:false},
+{name:'月桂酰肌氨酸钠',type:'阴离子',product:'清洁型',peg:false},
+{name:'甲基椰油酰基牛磺酸钠',type:'阴离子',product:'清洁型',peg:false},
+{name:'椰油酰甘氨酸钠/钾',type:'阴离子',product:'清洁型',peg:false},
+{name:'椰油酰两性基乙酸钠/二乙酸二钠',type:'两性',product:'清洁型',peg:false},
+{name:'椰油酰羟乙磺酸酯钠（SCI）',type:'阴离子',product:'清洁型',peg:false},
+{name:'脂肪酸钠/钾皂基',type:'阴离子',product:'清洁型',peg:false},
+{name:'椰油酰胺MEA',type:'非离子',product:'清洁型',peg:false},
+{name:'PPG-5-鲸蜡醇聚醚-20',type:'非离子',product:'清洁型',peg:true},
+{name:'泊洛沙姆184',type:'非离子',product:'水剂/增溶型',peg:true},
+{name:'PEG-40氢化蓖麻油',type:'非离子',product:'水剂/增溶型',peg:true},
+{name:'PEG-60氢化蓖麻油',type:'非离子',product:'水剂/增溶型',peg:true},
+{name:'聚山梨醇酯-20',type:'非离子',product:'水剂/增溶型',peg:true},
+{name:'PEG-80失水山梨醇月桂酸酯',type:'非离子',product:'水剂/增溶型',peg:true},
+{name:'PEG-100硬脂酸酯',type:'乳化型',product:'乳化型',peg:true},
+{name:'PEG-150季戊四醇四硬脂酸酯',type:'乳化型',product:'乳化型',peg:true},
+{name:'PEG-10聚二甲基硅氧烷',type:'乳化型',product:'乳化型',peg:true},
+{name:'甘油硬脂酸酯',type:'乳化型',product:'乳化型',peg:false}
 ];
 let mode='ingredient';
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.getElementById('networkPanel').hidden=mode!=='network';document.getElementById('dataPanel').hidden=mode!=='data';document.getElementById('searchPanel').hidden=['network','data'].includes(mode);document.getElementById('ingredientFields').hidden=mode!=='ingredient';document.getElementById('preservativeFields').hidden=mode!=='preservative';document.getElementById('propertyFields').hidden=mode!=='property';if(!['network','data'].includes(mode))run();if(mode==='data')renderDrafts()});
